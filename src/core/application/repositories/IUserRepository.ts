@@ -1,4 +1,4 @@
-import { User,UserProps } from '../../damin/User';
+import { User,UserProps } from '../../domain/User';
 
 export interface IUserRepository {
     findById(id: string): Promise<User | null>;

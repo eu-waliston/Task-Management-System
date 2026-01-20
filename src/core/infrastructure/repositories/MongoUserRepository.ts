@@ -1,7 +1,6 @@
 import { User, UserProps, UserRole } from '../../domain/User';
 import { IUserRepository } from '../../application/repositories/IUserRepository';
 import { Database } from '../../../config/database';
-import { User, User, User, User, UserProps } from '../../damin/User';
 
 export class MongoUserRepository implements IUserRepository {
     private collection;
@@ -22,7 +21,7 @@ export class MongoUserRepository implements IUserRepository {
 
     async findAll(): Promise<User[]> {
         const userDocs = await this.collection.find().toArray();
-        return userDocs.map(doc => new User(doc));
+        return userDocs.map((doc: any) => new User(doc));
     }
 
     async create(userProps: UserProps): Promise<User> {

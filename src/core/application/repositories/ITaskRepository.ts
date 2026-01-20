@@ -1,4 +1,4 @@
-import { Task, TaskProps } from "../../damin/Task";
+import { Task, TaskProps } from "../../domain/Task";
 
 export interface ITaskRepository {
     findByid(id: string): Promise<Task[]>;
