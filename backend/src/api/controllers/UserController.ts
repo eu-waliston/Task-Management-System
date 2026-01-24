@@ -5,9 +5,11 @@ import { UpdateUserUseCase } from '../../core/application/useCases/user/UpdateUs
 import { DeleteUserUseCase } from '../../core/application/useCases/user/DeleteUserUseCase';
 import { ListUsersUseCase } from '../../core/application/useCases/user/ListUsersUseCase';
 import { MongoUserRepository } from '../../core/infrastructure/repositories/MongoUserRepository';
+// TODO '"../../core/infrastructure/repositories/MongoUserRepository"' has no exported member named 'MongoUserRepository'. Did you mean 'MongoTaskRepository'?
 import { AuthenticatedRequest } from '../middleware/auth';
+// TODO '"../middleware/auth"' has no exported member named 'AuthenticatedRequest'. Did you mean 'AuthernticatedRequest'?
 import { NotFoundError, ForbiddenError } from '../middleware/errorHandler';
-
+// TODO Module '"../middleware/errorHandler"' has no exported member 'ForbiddenError'.
 export class UserController {
   private createUserUseCase: CreateUserUseCase;
   private getUserUseCase: GetUserUseCase;

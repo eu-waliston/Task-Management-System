@@ -27,6 +27,9 @@ export interface TaskProps {
     tags?: string[];
     createdAt?: Date;
     updatedAt?: Date;
+    taskDoc: string;
+    
+
 }
 
 export class Task {
@@ -42,6 +45,7 @@ export class Task {
     public readonly tags: string[];
     public readonly createdAt: Date;
     public readonly updatedAt: Date;
+    public readonly taskDoc: string;
 
     constructor(props: TaskProps) {
         this.id = props.id || uuidv4();
@@ -56,6 +60,7 @@ export class Task {
         this.tags = props.tags || [];
         this.createdAt = props.createdAt || new Date();
         this.updatedAt = props.updatedAt || new Date();
+        this.taskDoc = props.taskDoc;
     }
 
     public update(props: Partial<TaskProps>): Task {

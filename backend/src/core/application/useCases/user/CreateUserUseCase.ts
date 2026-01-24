@@ -1,7 +1,7 @@
 import { User, UserProps, UserRole } from '../../../domain/User';
 import { IUserRepository } from '../../repositories/IUserRepository';
 import { ConflictError, ValidationError } from '../../errors/AppError';
-
+//TODO Cannot find module '../../errors/AppError' or its corresponding type declarations.
 export class CreateUserUseCase {
     constructor(private userRepository: IUserRepository) {}
 

@@ -16,7 +16,7 @@ import {
   resetPasswordSchema,
   taskFilterSchema
 } from '../validators/userValidators';
-
+// TODO Module '"../validators/userValidators"' has no exported member 'taskFilterSchema'.
 const router = Router();
 const userController = new UserController();
 
@@ -36,7 +36,7 @@ router.post('/', validate(userCreateSchema), userController.createUser);
  * @access Public
  */
 router.post('/login', validate(userLoginSchema), userController.login);
-
+// TODO Property 'login' does not exist on type 'UserController'.
 /**
  * @route GET /api/users/me
  * @desc Obter informações do usuário atual
@@ -93,6 +93,7 @@ router.patch(
   validateParams(z.object({ id: z.string().uuid() })),
   validate(changePasswordSchema),
   userController.changePassword
+  // TODO Property 'changePassword' does not exist on type 'UserController'.
 );
 
 /**
@@ -104,6 +105,7 @@ router.post(
   '/forgot-password',
   validate(z.object({ email: z.string().email() })),
   userController.forgotPassword
+  // TODO Property 'forgotPassword' does not exist on type 'UserController'.
 );
 
 /**
@@ -115,6 +117,7 @@ router.post(
   '/reset-password',
   validate(resetPasswordSchema),
   userController.resetPassword
+  // TODO Property 'resetPassword' does not exist on type 'UserController'.
 );
 
 /**

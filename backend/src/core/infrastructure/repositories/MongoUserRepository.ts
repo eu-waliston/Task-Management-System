@@ -15,27 +15,27 @@ export class MongoTaskRepository implements ITaskRepository {
 
   async findById(id: string): Promise<Task | null> {
     const taskDoc = await this.collection.findOne({ id });
-    return taskDoc ? new Task(taskDoc) : null;
+    return taskDoc ? new Task(taskDoc as unknown as TaskProps) : null;
   }
 
   async findAll(): Promise<Task[]> {
     const taskDocs = await this.collection.find().toArray();
-    return taskDocs.map(doc => new Task(doc));
+    return taskDocs.map(doc => new Task(doc as unknown as TaskProps));
   }
 
   async findByProject(projectId: string): Promise<Task[]> {
     const taskDocs = await this.collection.find({ projectId }).toArray();
-    return taskDocs.map(doc => new Task(doc));
+    return taskDocs.map(doc => new Task(doc as unknown as TaskProps));
   }
 
   async findByAssignee(assigneeId: string): Promise<Task[]> {
     const taskDocs = await this.collection.find({ assigneeId }).toArray();
-    return taskDocs.map(doc => new Task(doc));
+    return taskDocs.map(doc => new Task(doc as unknown as TaskProps));
   }
 
   async findByCreator(createdBy: string): Promise<Task[]> {
     const taskDocs = await this.collection.find({ createdBy }).toArray();
-    return taskDocs.map(doc => new Task(doc));
+    return taskDocs.map(doc => new Task(doc as unknown as TaskProps));
   }
 
   async create(taskProps: TaskProps): Promise<Task> {
@@ -56,7 +56,7 @@ export class MongoTaskRepository implements ITaskRepository {
       { returnDocument: 'after' }
     );
 
-    return result ? new Task(result) : null;
+    return result ? new Task(result as unknown as TaskProps) : null;
   }
 
   async delete(id: string): Promise<boolean> {

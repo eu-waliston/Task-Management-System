@@ -15,6 +15,11 @@ const { combine, timestamp, printf, colorize, errors, metadata } = winston.forma
 // Formato personalizado para logs
 const customFormat = printf(({ level, message, timestamp, stack, metadata }) => {
   const meta = Object.keys(metadata).length ? JSON.stringify(metadata) : '';
+  /* TODO No overload matches this call.
+  Overload 1 of 2, '(o: {}): string[]', gave the following error.
+    Argument of type 'unknown' is not assignable to parameter of type '{}'.
+  Overload 2 of 2, '(o: object): string[]', gave the following error.
+    Argument of type 'unknown' is not assignable to parameter of type 'object'. */
   const stackTrace = stack ? `\n${stack}` : '';
   return `${timestamp} [${level.toUpperCase()}] ${message} ${meta}${stackTrace}`;
 });

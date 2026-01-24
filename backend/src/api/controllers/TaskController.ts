@@ -1,15 +1,26 @@
 import { Request, Response } from 'express';
 import { CreateTaskUseCase } from '../../core/application/useCases/task/CreateTaskUseCase';
+// TODO Cannot find module '../../core/application/useCases/task/CreateTaskUseCase' or its corresponding type declarations.
 import { GetTaskUseCase } from '../../core/application/useCases/task/GetTaskUseCase';
+// TODO Cannot find module '../../core/application/useCases/task/GetTaskUseCase' or its corresponding type declarations.
 import { UpdateTaskUseCase } from '../../core/application/useCases/task/UpdateTaskUseCase';
+// TODO Cannot find module '../../core/application/useCases/task/UpdateTaskUseCase' or its corresponding type declarations.
 import { DeleteTaskUseCase } from '../../core/application/useCases/task/DeleteTaskUseCase';
+// TODO Cannot find module '../../core/application/useCases/task/DeleteTaskUseCase' or its corresponding type declarations.
 import { ListTasksUseCase } from '../../core/application/useCases/task/ListTasksUseCase';
+// TODO Cannot find module '../../core/application/useCases/task/ListTasksUseCase' or its corresponding type declarations.
 import { GetTasksByProjectUseCase } from '../../core/application/useCases/task/GetTasksByProjectUseCase';
+// TODO Cannot find module '../../core/application/useCases/task/GetTasksByProjectUseCase' or its corresponding type declarations.
 import { GetAssignedTasksUseCase } from '../../core/application/useCases/task/GetAssignedTasksUseCase';
+// TODO Cannot find module '../../core/application/useCases/task/GetAssignedTasksUseCase' or its corresponding type declarations.
 import { GetCreatedTasksUseCase } from '../../core/application/useCases/task/GetCreatedTasksUseCase';
+// TODO Cannot find module '../../core/application/useCases/task/GetCreatedTasksUseCase' or its corresponding type declarations.
 import { UpdateTaskStatusUseCase } from '../../core/application/useCases/task/UpdateTaskStatusUseCase';
+// TODO Cannot find module '../../core/application/useCases/task/UpdateTaskStatusUseCase' or its corresponding type declarations.
 import { AssignTaskUseCase } from '../../core/application/useCases/task/AssignTaskUseCase';
+// TODO Cannot find module '../../core/application/useCases/task/AssignTaskUseCase' or its corresponding type declarations.
 import { MongoTaskRepository } from '../../core/infrastructure/repositories/MongoTaskRepository';
+// TODO Cannot find module '../../core/infrastructure/repositories/MongoTaskRepository' or its corresponding type declarations.
 import { AuthernticatedRequest } from '../middleware/auth';
 import { UnauthorizedError, NotFoundError } from '../middleware/errorHandler';
 

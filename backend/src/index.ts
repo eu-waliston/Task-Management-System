@@ -8,6 +8,7 @@ import { userRoutes } from './api/routes/userRoutes';
 import { taskRoutes } from './api/routes/taskRoutes';
 import { errorHandler } from './api/middleware/errorHandler';
 import { setupSwagger } from './config/swagger';
+// TODO Cannot find module './config/swagger' or its corresponding type declarations.
 import { logger, httpLoggerStream, requestLoggerMiddleware } from './config/logger';
 
 class Application {
