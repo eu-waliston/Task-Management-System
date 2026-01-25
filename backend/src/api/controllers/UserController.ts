@@ -5,11 +5,8 @@ import { UpdateUserUseCase } from '../../core/application/useCases/user/UpdateUs
 import { DeleteUserUseCase } from '../../core/application/useCases/user/DeleteUserUseCase';
 import { ListUsersUseCase } from '../../core/application/useCases/user/ListUsersUseCase';
 import { MongoUserRepository } from '../../core/infrastructure/repositories/MongoUserRepository';
-// TODO '"../../core/infrastructure/repositories/MongoUserRepository"' has no exported member named 'MongoUserRepository'. Did you mean 'MongoTaskRepository'?
-import { AuthenticatedRequest } from '../middleware/auth';
-// TODO '"../middleware/auth"' has no exported member named 'AuthenticatedRequest'. Did you mean 'AuthernticatedRequest'?
-import { NotFoundError, ForbiddenError } from '../middleware/errorHandler';
-// TODO Module '"../middleware/errorHandler"' has no exported member 'ForbiddenError'.
+import { AuthernticatedRequest } from '../middleware/auth';
+import { NotFoundError, UnauthorizedError } from '../middleware/errorHandler';
 export class UserController {
   private createUserUseCase: CreateUserUseCase;
   private getUserUseCase: GetUserUseCase;
@@ -41,10 +38,10 @@ export class UserController {
     }
   };
 
-  getCurrentUser = async (req: AuthenticatedRequest, res: Response): Promise<void> => {
+  getCurrentUser = async (req: AuthernticatedRequest, res: Response): Promise<void> => {
     try {
       if (!req.user) {
-        throw new ForbiddenError('User not authenticated');
+        throw new UnauthorizedError('User not authenticated');
       }
 
       const user = await this.getUserUseCase.execute(req.user.id);
@@ -60,13 +57,13 @@ export class UserController {
     }
   };
 
-  getUserById = async (req: AuthenticatedRequest, res: Response): Promise<void> => {
+  getUserById = async (req: AuthernticatedRequest, res: Response): Promise<void> => {
     try {
       const { id } = req.params;
 
       // Verificar se o usuário tem permissão
       if (!req.user || (req.user.role !== 'admin' && req.user.id !== id)) {
-        throw new ForbiddenError('You do not have permission to view this user');
+        throw new UnauthorizedError('You do not have permission to view this user');
       }
 
       const user = await this.getUserUseCase.execute(id);
@@ -82,7 +79,7 @@ export class UserController {
     }
   };
 
-  getAllUsers = async (req: AuthenticatedRequest, res: Response): Promise<void> => {
+  getAllUsers = async (req: AuthernticatedRequest, res: Response): Promise<void> => {
     try {
       const users = await this.listUsersUseCase.execute();
       res.status(200).json({
@@ -97,13 +94,13 @@ export class UserController {
     }
   };
 
-  updateUser = async (req: AuthenticatedRequest, res: Response): Promise<void> => {
+  updateUser = async (req: AuthernticatedRequest, res: Response): Promise<void> => {
     try {
       const { id } = req.params;
 
       // Verificar se o usuário tem permissão
       if (!req.user || (req.user.role !== 'admin' && req.user.id !== id)) {
-        throw new ForbiddenError('You do not have permission to update this user');
+        throw new UnauthorizedError('You do not have permission to update this user');
       }
 
       const user = await this.updateUserUseCase.execute(id, req.body);
@@ -119,7 +116,7 @@ export class UserController {
     }
   };
 
-  deleteUser = async (req: AuthenticatedRequest, res: Response): Promise<void> => {
+  deleteUser = async (req: AuthernticatedRequest, res: Response): Promise<void> => {
     try {
       const { id } = req.params;
       const result = await this.deleteUserUseCase.execute(id);

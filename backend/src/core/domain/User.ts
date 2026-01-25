@@ -1,3 +1,4 @@
+import { UserInfoOptions } from 'os';
 import { v4 as uuidv4 } from 'uuid';
 
 export enum UserRole {
@@ -17,7 +18,32 @@ export interface UserProps {
   isActive: boolean;
   createdAt?: Date;
   updatedAt?: Date;
+  dueDate?: Date;
+  assigneeId: string;
+  projectId: UserRole;
+  createdBy: UserRole;
+  tags: UserInfoOptions;
+  estimatedHours: string,
+  actualHours: string,
+  status: string;
+
 }
+
+export enum UserStatus {
+  TODO = "todo",
+  IN_PROGRESS = "in_progress",
+  REVIEW = "review",
+  DONE = "done",
+}
+
+export enum UserPriority {
+  LOW = "low",
+  MEDIUM = "medium",
+  HIGH = "high",
+  URGENT = "urgent",
+}
+
+
 
 export class User {
   public readonly id: string;
@@ -29,6 +55,19 @@ export class User {
   public readonly isActive: boolean;
   public readonly createdAt: Date;
   public readonly updatedAt: Date;
+  public readonly dueDate: Date;
+
+  title: any;
+  description: any;
+  status: any;
+  priority: any;
+  assigneeId: any;
+  projectId: any;
+  createdBy: any;
+  tags: any;
+  estimatedHours: any;
+  actualHours: any;
+
 
   constructor(props: UserProps) {
     this.id = props.id || uuidv4();
@@ -40,11 +79,13 @@ export class User {
     this.isActive = props.isActive !== undefined ? props.isActive : true;
     this.createdAt = props.createdAt || new Date();
     this.updatedAt = props.updatedAt || new Date();
+    this.dueDate = props.updatedAt || new Date();
+
   }
 
-    public get fullName(): string {
-        return `${this.firstName} ${this.lastName}`;
-    }
+  public get fullName(): string {
+    return `${this.firstName} ${this.lastName}`;
+  }
 
   public update(props: Partial<UserProps>): User {
     return new User({
@@ -55,3 +96,5 @@ export class User {
   }
 
 }
+
+

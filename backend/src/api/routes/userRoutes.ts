@@ -16,7 +16,6 @@ import {
   resetPasswordSchema,
   taskFilterSchema
 } from '../validators/userValidators';
-// TODO Module '"../validators/userValidators"' has no exported member 'taskFilterSchema'.
 const router = Router();
 const userController = new UserController();
 
@@ -35,7 +34,7 @@ router.post('/', validate(userCreateSchema), userController.createUser);
  * @desc Fazer login de usuário
  * @access Public
  */
-router.post('/login', validate(userLoginSchema), userController.login);
+router.post('/login', validate(userLoginSchema), userController.getCurrentUser);
 // TODO Property 'login' does not exist on type 'UserController'.
 /**
  * @route GET /api/users/me

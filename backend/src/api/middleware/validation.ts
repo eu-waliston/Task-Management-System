@@ -205,13 +205,11 @@ export const validateFile = (
   return (req: Request, res: Response, next: NextFunction) => {
     try {
       if (!req.file) {
-        // TODO Property 'file' does not exist on type 'Request<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.ts(2339)
         return next();
       }
 
       const { mimetype, size } = req.file;
-      // TODO Property 'file' does not exist on type 'Request<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.ts(2339)
-      // Validar tipo do arquivo
+
       if (!allowedTypes.includes(mimetype)) {
         throw new ValidationError(
           `Invalid file type. Allowed types: ${allowedTypes.join(', ')}`
@@ -227,7 +225,6 @@ export const validateFile = (
 
       logger.debug('File validation successful', {
         filename: req.file.originalname,
-        // TODO Property 'file' does not exist on type 'Request<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.ts(2339)
         mimetype,
         size,
       });
