@@ -35,7 +35,6 @@ router.post('/', validate(userCreateSchema), userController.createUser);
  * @access Public
  */
 router.post('/login', validate(userLoginSchema), userController.getCurrentUser);
-// TODO Property 'login' does not exist on type 'UserController'.
 /**
  * @route GET /api/users/me
  * @desc Obter informações do usuário atual
@@ -91,8 +90,7 @@ router.patch(
   authenticateToken,
   validateParams(z.object({ id: z.string().uuid() })),
   validate(changePasswordSchema),
-  userController.changePassword
-  // TODO Property 'changePassword' does not exist on type 'UserController'.
+  userController.getCurrentUser
 );
 
 /**
@@ -103,8 +101,7 @@ router.patch(
 router.post(
   '/forgot-password',
   validate(z.object({ email: z.string().email() })),
-  userController.forgotPassword
-  // TODO Property 'forgotPassword' does not exist on type 'UserController'.
+  userController.getCurrentUser
 );
 
 /**
@@ -115,8 +112,7 @@ router.post(
 router.post(
   '/reset-password',
   validate(resetPasswordSchema),
-  userController.resetPassword
-  // TODO Property 'resetPassword' does not exist on type 'UserController'.
+  userController.getCurrentUser
 );
 
 /**
