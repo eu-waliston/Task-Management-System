@@ -9,7 +9,7 @@ import { GetAssignedTasksUseCase } from "../../core/application/useCases/task/Ge
 import { GetCreatedTasksUseCase } from "../../core/application/useCases/task/GetCreatedTasksUseCase";
 import { UpdateTaskStatusUseCase } from "../../core/application/useCases/task/UpdateTaskStatusUseCase";
 import { AssignTaskUseCase } from "../../core/application/useCases/task/AssignTaskUseCase";
-import { MongoTaskRepository } from "../../core/infrastructure/repositories/MongoUserRepository";
+import { MongoTaskRepository } from "../../core/infrastructure/repositories/MongoTaskRepository";
 import { AuthernticatedRequest } from "../middleware/auth";
 import { UnauthorizedError, NotFoundError } from "../middleware/errorHandler";
 

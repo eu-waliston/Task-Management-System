@@ -9,29 +9,29 @@ export const processTaskFilters = async (req: Request, res: Response, next: Next
     // Parse e validar os query params
     const filters = taskFilterSchema.parse(req.query);
 
-    // Construir query MongoDB
-    const query = buildTaskQueryFromFilters(filters);
+    // // Construir query MongoDB
+    // const query = buildTaskQueryFromFilters(filters);
 
-    // Construir opções de ordenação
-    const sort = buildSortOptions(filters);
+    // // Construir opções de ordenação
+    // const sort = buildSortOptions(filters);
 
-    // Construir opções de paginação
-    const pagination = buildPagination(filters);
+    // // Construir opções de paginação
+    // const pagination = buildPagination(filters);
 
-    // Adicionar ao request para uso nos controllers
-    req.taskFilters = {
-      query,
-      sort,
-      pagination,
-      originalFilters: filters,
-    };
+    // // Adicionar ao request para uso nos controllers
+    // req.taskFilters = {
+    //   query,
+    //   sort,
+    //   pagination,
+    //   originalFilters: filters,
+    // };
 
-    logger.debug('Task filters processed successfully', {
-      filterCount: Object.keys(filters).length,
-      query: JSON.stringify(query),
-      sort,
-      pagination,
-    });
+    // logger.debug('Task filters processed successfully', {
+    //   filterCount: Object.keys(filters).length,
+    //   query: JSON.stringify(query),
+    //   sort,
+    //   pagination,
+    // });
 
     next();
   } catch (error) {

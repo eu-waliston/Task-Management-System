@@ -169,6 +169,18 @@ export const taskFilterSchema = z.object({
   sortOrder: z.enum(['asc', 'desc']).optional().default('desc'),
 });
 
+export const buildTaskQueryFromFilters = z.object({
+  assigneeId: z.string()
+    .uuid('Assignee ID must be a valid UUID'),
+
+  notify: z.boolean()
+    .optional()
+    .default(true),
+});
+
+export const buildSortOptions = z.object({})
+export const buildPagination = z.object({})
+
 // Tipo inferido do schema de criação
 export type TaskCreateInput = z.infer<typeof taskCreateSchema>;
 

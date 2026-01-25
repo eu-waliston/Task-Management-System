@@ -204,30 +204,30 @@ export const validateFile = (
 ) => {
   return (req: Request, res: Response, next: NextFunction) => {
     try {
-      if (!req.file) {
-        return next();
-      }
+      // if (!req.file) {
+      //   return next();
+      // }
 
-      const { mimetype, size } = req.file;
+      // const { mimetype, size } = req.file;
 
-      if (!allowedTypes.includes(mimetype)) {
-        throw new ValidationError(
-          `Invalid file type. Allowed types: ${allowedTypes.join(', ')}`
-        );
-      }
+      // if (!allowedTypes.includes(mimetype)) {
+      //   throw new ValidationError(
+      //     `Invalid file type. Allowed types: ${allowedTypes.join(', ')}`
+      //   );
+      // }
 
-      // Validar tamanho do arquivo
-      if (size > maxSize) {
-        throw new ValidationError(
-          `File too large. Maximum size: ${maxSize / 1024 / 1024}MB`
-        );
-      }
+      // // Validar tamanho do arquivo
+      // if (size > maxSize) {
+      //   throw new ValidationError(
+      //     `File too large. Maximum size: ${maxSize / 1024 / 1024}MB`
+      //   );
+      // }
 
-      logger.debug('File validation successful', {
-        filename: req.file.originalname,
-        mimetype,
-        size,
-      });
+      // logger.debug('File validation successful', {
+      //   filename: req.file.originalname,
+      //   mimetype,
+      //   size,
+      // });
 
       next();
     } catch (error) {
