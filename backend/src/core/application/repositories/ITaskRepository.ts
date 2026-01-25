@@ -1,6 +1,7 @@
 import { Task, TaskProps } from "../../domain/Task";
 
 export interface ITaskRepository {
+    [x: string]: any;
     findByid(id: string): Promise<Task[]>;
     findAll(): Promise<Task[]>;
     findByProject(projectId: string): Promise<Task[]>;

@@ -1,28 +1,17 @@
-import { Request, Response } from 'express';
-import { CreateTaskUseCase } from '../../core/application/useCases/task/CreateTaskUseCase';
-// TODO Cannot find module '../../core/application/useCases/task/CreateTaskUseCase' or its corresponding type declarations.
-import { GetTaskUseCase } from '../../core/application/useCases/task/GetTaskUseCase';
-// TODO Cannot find module '../../core/application/useCases/task/GetTaskUseCase' or its corresponding type declarations.
-import { UpdateTaskUseCase } from '../../core/application/useCases/task/UpdateTaskUseCase';
-// TODO Cannot find module '../../core/application/useCases/task/UpdateTaskUseCase' or its corresponding type declarations.
-import { DeleteTaskUseCase } from '../../core/application/useCases/task/DeleteTaskUseCase';
-// TODO Cannot find module '../../core/application/useCases/task/DeleteTaskUseCase' or its corresponding type declarations.
-import { ListTasksUseCase } from '../../core/application/useCases/task/ListTasksUseCase';
-// TODO Cannot find module '../../core/application/useCases/task/ListTasksUseCase' or its corresponding type declarations.
-import { GetTasksByProjectUseCase } from '../../core/application/useCases/task/GetTasksByProjectUseCase';
-// TODO Cannot find module '../../core/application/useCases/task/GetTasksByProjectUseCase' or its corresponding type declarations.
-import { GetAssignedTasksUseCase } from '../../core/application/useCases/task/GetAssignedTasksUseCase';
-// TODO Cannot find module '../../core/application/useCases/task/GetAssignedTasksUseCase' or its corresponding type declarations.
-import { GetCreatedTasksUseCase } from '../../core/application/useCases/task/GetCreatedTasksUseCase';
-// TODO Cannot find module '../../core/application/useCases/task/GetCreatedTasksUseCase' or its corresponding type declarations.
-import { UpdateTaskStatusUseCase } from '../../core/application/useCases/task/UpdateTaskStatusUseCase';
-// TODO Cannot find module '../../core/application/useCases/task/UpdateTaskStatusUseCase' or its corresponding type declarations.
-import { AssignTaskUseCase } from '../../core/application/useCases/task/AssignTaskUseCase';
-// TODO Cannot find module '../../core/application/useCases/task/AssignTaskUseCase' or its corresponding type declarations.
-import { MongoTaskRepository } from '../../core/infrastructure/repositories/MongoTaskRepository';
-// TODO Cannot find module '../../core/infrastructure/repositories/MongoTaskRepository' or its corresponding type declarations.
-import { AuthernticatedRequest } from '../middleware/auth';
-import { UnauthorizedError, NotFoundError } from '../middleware/errorHandler';
+import { Request, Response } from "express";
+import { CreateTaskUseCase } from "../../core/application/useCases/task/CreateTaskUseCase";
+import { GetTaskUseCase } from "../../core/application/useCases/task/GetTaskUseCase";
+import { UpdateTaskUseCase } from "../../core/application/useCases/task/UpdateTaskUseCase";
+import { DeleteTaskUseCase } from "../../core/application/useCases/task/DeleteTaskUseCase";
+import { ListTasksUseCase } from "../../core/application/useCases/task/ListTasksUseCase";
+import { GetTasksByProjectUseCase } from "../../core/application/useCases/task/GetTasksByProjectUseCase";
+import { GetAssignedTasksUseCase } from "../../core/application/useCases/task/GetAssignedTasksUseCase";
+import { GetCreatedTasksUseCase } from "../../core/application/useCases/task/GetCreatedTasksUseCase";
+import { UpdateTaskStatusUseCase } from "../../core/application/useCases/task/UpdateTaskStatusUseCase";
+import { AssignTaskUseCase } from "../../core/application/useCases/task/AssignTaskUseCase";
+import { MongoTaskRepository } from "../../core/infrastructure/repositories/MongoUserRepository";
+import { AuthernticatedRequest } from "../middleware/auth";
+import { UnauthorizedError, NotFoundError } from "../middleware/errorHandler";
 
 export class TaskController {
   private createTaskUseCase: CreateTaskUseCase;
@@ -43,176 +32,209 @@ export class TaskController {
     this.updateTaskUseCase = new UpdateTaskUseCase(taskRepository);
     this.deleteTaskUseCase = new DeleteTaskUseCase(taskRepository);
     this.listTasksUseCase = new ListTasksUseCase(taskRepository);
-    this.getTasksByProjectUseCase = new GetTasksByProjectUseCase(taskRepository);
+    this.getTasksByProjectUseCase = new GetTasksByProjectUseCase(
+      taskRepository,
+    );
     this.getAssignedTasksUseCase = new GetAssignedTasksUseCase(taskRepository);
     this.getCreatedTasksUseCase = new GetCreatedTasksUseCase(taskRepository);
     this.updateTaskStatusUseCase = new UpdateTaskStatusUseCase(taskRepository);
     this.assignTaskUseCase = new AssignTaskUseCase(taskRepository);
   }
 
-  getAllTasks = async (req: AuthernticatedRequest, res: Response): Promise<void> => {
+  getAllTasks = async (
+    req: AuthernticatedRequest,
+    res: Response,
+  ): Promise<void> => {
     try {
       const tasks = await this.listTasksUseCase.execute();
       res.status(200).json({
         success: true,
-        data: tasks
+        data: tasks,
       });
     } catch (error: any) {
       res.status(error.statusCode || 500).json({
         success: false,
-        error: error.message
+        error: error.message,
       });
     }
   };
 
-  getTaskById = async (req: AuthernticatedRequest, res: Response): Promise<void> => {
+  getTaskById = async (
+    req: AuthernticatedRequest,
+    res: Response,
+  ): Promise<void> => {
     try {
       const { id } = req.params;
       const task = await this.getTaskUseCase.execute(id);
       res.status(200).json({
         success: true,
-        data: task
+        data: task,
       });
     } catch (error: any) {
       res.status(error.statusCode || 500).json({
         success: false,
-        error: error.message
+        error: error.message,
       });
     }
   };
 
-  getTasksByProject = async (req: AuthernticatedRequest, res: Response): Promise<void> => {
+  getTasksByProject = async (
+    req: AuthernticatedRequest,
+    res: Response,
+  ): Promise<void> => {
     try {
       const { projectId } = req.params;
       const tasks = await this.getTasksByProjectUseCase.execute(projectId);
       res.status(200).json({
         success: true,
-        data: tasks
+        data: tasks,
       });
     } catch (error: any) {
       res.status(error.statusCode || 500).json({
         success: false,
-        error: error.message
+        error: error.message,
       });
     }
   };
 
-  getAssignedTasks = async (req: AuthernticatedRequest, res: Response): Promise<void> => {
+  getAssignedTasks = async (
+    req: AuthernticatedRequest,
+    res: Response,
+  ): Promise<void> => {
     try {
       if (!req.user) {
-        throw new UnauthorizedError('User not authenticated');
+        throw new UnauthorizedError("User not authenticated");
       }
 
       const tasks = await this.getAssignedTasksUseCase.execute(req.user.id);
       res.status(200).json({
         success: true,
-        data: tasks
+        data: tasks,
       });
     } catch (error: any) {
       res.status(error.statusCode || 500).json({
         success: false,
-        error: error.message
+        error: error.message,
       });
     }
   };
 
-  getCreatedTasks = async (req: AuthernticatedRequest, res: Response): Promise<void> => {
+  getCreatedTasks = async (
+    req: AuthernticatedRequest,
+    res: Response,
+  ): Promise<void> => {
     try {
       if (!req.user) {
-        throw new UnauthorizedError('User not authenticated');
+        throw new UnauthorizedError("User not authenticated");
       }
 
       const tasks = await this.getCreatedTasksUseCase.execute(req.user.id);
       res.status(200).json({
         success: true,
-        data: tasks
+        data: tasks,
       });
     } catch (error: any) {
       res.status(error.statusCode || 500).json({
         success: false,
-        error: error.message
+        error: error.message,
       });
     }
   };
 
-  createTask = async (req: AuthernticatedRequest, res: Response): Promise<void> => {
+  createTask = async (
+    req: AuthernticatedRequest,
+    res: Response,
+  ): Promise<void> => {
     try {
       if (!req.user) {
-        throw new UnauthorizedError('User not authenticated');
+        throw new UnauthorizedError("User not authenticated");
       }
 
       const taskData = {
         ...req.body,
-        createdBy: req.user.id
+        createdBy: req.user.id,
       };
 
       const task = await this.createTaskUseCase.execute(taskData);
       res.status(201).json({
         success: true,
-        data: task
+        data: task,
       });
     } catch (error: any) {
       res.status(error.statusCode || 500).json({
         success: false,
-        error: error.message
+        error: error.message,
       });
     }
   };
 
-  updateTask = async (req: AuthernticatedRequest, res: Response): Promise<void> => {
+  updateTask = async (
+    req: AuthernticatedRequest,
+    res: Response,
+  ): Promise<void> => {
     try {
       const { id } = req.params;
 
       // Verificar permissões (implementação básica)
       const task = await this.getTaskUseCase.execute(id);
-      if (!req.user ||
-          (req.user.role !== 'admin' &&
-           req.user.role !== 'manager' &&
-           task.createdBy !== req.user.id)) {
-        throw new UnauthorizedError('You do not have permission to update this task');
+      if (
+        !req.user ||
+        (req.user.role !== "admin" &&
+          req.user.role !== "manager" &&
+          task.createdBy !== req.user.id)
+      ) {
+        throw new UnauthorizedError(
+          "You do not have permission to update this task",
+        );
       }
 
       const updatedTask = await this.updateTaskUseCase.execute(id, req.body);
       res.status(200).json({
         success: true,
-        data: updatedTask
+        data: updatedTask,
       });
     } catch (error: any) {
       res.status(error.statusCode || 500).json({
         success: false,
-        error: error.message
+        error: error.message,
       });
     }
   };
 
-  updateTaskStatus = async (req: AuthernticatedRequest, res: Response): Promise<void> => {
+  updateTaskStatus = async (
+    req: AuthernticatedRequest,
+    res: Response,
+  ): Promise<void> => {
     try {
       const { id } = req.params;
       const { status } = req.body;
 
       if (!req.user) {
-        throw new UnauthorizedError('User not authenticated');
+        throw new UnauthorizedError("User not authenticated");
       }
 
       const updatedTask = await this.updateTaskStatusUseCase.execute(
         id,
         status,
-        req.user.id
+        req.user.id,
       );
 
       res.status(200).json({
         success: true,
-        data: updatedTask
+        data: updatedTask,
       });
     } catch (error: any) {
       res.status(error.statusCode || 500).json({
         success: false,
-        error: error.message
+        error: error.message,
       });
     }
   };
 
-  assignTask = async (req: AuthernticatedRequest, res: Response): Promise<void> => {
+  assignTask = async (
+    req: AuthernticatedRequest,
+    res: Response,
+  ): Promise<void> => {
     try {
       const { id } = req.params;
       const { assigneeId } = req.body;
@@ -220,29 +242,32 @@ export class TaskController {
       const updatedTask = await this.assignTaskUseCase.execute(id, assigneeId);
       res.status(200).json({
         success: true,
-        data: updatedTask
+        data: updatedTask,
       });
     } catch (error: any) {
       res.status(error.statusCode || 500).json({
         success: false,
-        error: error.message
+        error: error.message,
       });
     }
   };
 
-  deleteTask = async (req: AuthernticatedRequest, res: Response): Promise<void> => {
+  deleteTask = async (
+    req: AuthernticatedRequest,
+    res: Response,
+  ): Promise<void> => {
     try {
       const { id } = req.params;
       const result = await this.deleteTaskUseCase.execute(id);
 
       res.status(200).json({
         success: true,
-        data: result
+        data: result,
       });
     } catch (error: any) {
       res.status(error.statusCode || 500).json({
         success: false,
-        error: error.message
+        error: error.message,
       });
     }
   };
